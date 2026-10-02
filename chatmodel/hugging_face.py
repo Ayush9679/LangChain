@@ -1,14 +1,23 @@
-from langchain_groq import ChatGroq
+from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
-chat = ChatGroq(
-    model="openai/gpt-oss-120b",
-    temperature=0.7,
-    max_tokens=128,
+token = os.getenv("HF_TOKEN")
+
+print("Token loaded:", bool(token))
+
+llm = HuggingFaceEndpoint(
+    repo_id="openai/gpt-oss-20b",
+    provider="groq",
+    task="text-generation",
+    huggingfacehub_api_token=token,
+    max_new_tokens=100,
 )
 
-response = chat.invoke("lyrics of the song 'Shape of You' by Ed Sheeran")
+chat = ChatHuggingFace(llm=llm)
+
+response = chat.invoke("Why is the sky blue?")
 
 print(response.content)
