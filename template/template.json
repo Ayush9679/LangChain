@@ -1,0 +1,17 @@
+{
+    "name": null,
+    "input_variables": [
+        "movie",
+        "size",
+        "style"
+    ],
+    "optional_variables": [],
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "template": "Write a {size} paragraph summary of the research paper {movie} in a {style} style.",
+    "template_format": "f-string",
+    "validate_template": false,
+    "_type": "prompt"
+}
