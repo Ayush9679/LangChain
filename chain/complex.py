@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 from typing import Literal
 from langchain_core.runnables import (
     RunnableParallel,
-    RunnableBranch)
+    RunnableBranch, RunnableLambda)
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -58,6 +58,17 @@ classifier_chain = temp | model | parser
 result = classifier_chain.invoke({
     "topic": "I hate this smartphone"
 })
+
+branch_chain=RunnableBranch(
+    (lambda x: x.sentiment == "positive", prompt2 | model),
+    (lambda x: x.sentiment == "negative", prompt3 | model),
+    RunnableLambda(lambda x: "No feedback provided"))
+
+final_chain=classifier_chain | branch_chain
+
+results=final_chain.invoke({"topic": "I hate this smartphone"})
+
+print("Final Chain Result:",results.text)
 
 print(result)
 print(result.sentiment)
