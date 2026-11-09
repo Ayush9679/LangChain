@@ -1,0 +1,19 @@
+from langchain_community.document_loaders import CSVLoader
+
+loader = CSVLoader(
+    file_path=r"C:\Users\ayush\OneDrive\Desktop\Langchain\LangChain\data\annual-enterprise-survey-2025-financial-year-provisional-size-bands.csv"
+)
+
+documents = loader.load()
+
+# Document structure
+print(type(documents))
+print("Total documents:", len(documents))
+
+# Inspect first document
+print(type(documents[0]))
+print("Page Content:")
+print(documents[0].page_content)
+
+print("Metadata:")
+print(documents[0].metadata)
